@@ -107,6 +107,10 @@ The neural network was trained on 4,000 images over 400 epochs with a learning r
 * **Final Loss (Epoch 400)**: `0.3096`
 * **Training Accuracy**: `91.83%`
 * **Test Accuracy**: `88.70%`
+* **Per-digit test accuracy breakdown**:
+  * Highest accuracy: **Digit 0 (95.81%)**, **Digit 1 (95.26%)**, **Digit 7 (90.67%)**
+  * Baseline accuracy across digits: **88.70%**
+  * Lowest accuracy: **Digit 5 (76.11%)**, **Digit 8 (86.06%)**, **Digit 3 & 4 (87.56%)**
 
 ![Training Loss](images/11_training_loss.png)
 
@@ -155,15 +159,6 @@ As the target error rate $\alpha$ varies, the empirical coverage closely tracks 
 
 ---
 
-## 🔭 Limitations & Future Work
-
-- **Backbone capacity**: the from-scratch network is a compact 2-layer MLP trained on a 4,000-image subset — a deeper network or the full 60k-image training set would likely raise baseline accuracy and could shrink APS set sizes further.
-- **Exchangeability assumption**: both LAC and APS rely on the calibration and test sets being exchangeable; this holds for the i.i.d. splits used here but would need revisiting under distribution shift.
-- **Single dataset**: results are MNIST-specific — validating LAC/APS on a harder benchmark (e.g. Fashion-MNIST, CIFAR-10) would test how set sizes scale with genuine class ambiguity.
-- **Group-conditional coverage**: per-digit coverage already varies in the results above — a natural next step is class-conditional (Mondrian) conformal prediction to tighten worst-class guarantees rather than only the marginal one.
-
----
-
 ## 📈 Results & Business Impact
 
 | Dimension | Metric | Impact |
@@ -171,6 +166,15 @@ As the target error rate $\alpha$ varies, the empirical coverage closely tracks 
 | **Guaranteed Safety** | $89.81\%$ Empirical Coverage | Replaces point predictions with statistically guaranteed prediction sets, critical for high-stakes AI applications (medical imaging, autonomous driving). |
 | **High Efficiency** | $1.03$ Mean Set Size | $90\%$ of test samples require only a single digit prediction set, preserving decision speed while flagging ambiguous samples. |
 | **Model Agnostic** | Base R Implementation | Can be applied as a post-processing layer to any underlying black-box classifier without model retraining. |
+
+---
+
+## 🔭 Limitations & Future Work
+
+- **Backbone capacity**: the from-scratch network is a compact 2-layer MLP trained on a 4,000-image subset — a deeper network or the full 60k-image training set would likely raise baseline accuracy and could shrink APS set sizes further.
+- **Exchangeability assumption**: both LAC and APS rely on the calibration and test sets being exchangeable; this holds for the i.i.d. splits used here but would need revisiting under distribution shift.
+- **Single dataset**: results are MNIST-specific — validating LAC/APS on a harder benchmark (e.g. Fashion-MNIST, CIFAR-10) would test how set sizes scale with genuine class ambiguity.
+- **Group-conditional coverage**: per-digit coverage already varies in the results above — a natural next step is class-conditional (Mondrian) conformal prediction to tighten worst-class guarantees rather than only the marginal one.
 
 ---
 
