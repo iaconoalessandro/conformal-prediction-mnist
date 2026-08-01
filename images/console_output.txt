@@ -1,0 +1,259 @@
+=== CONFORMAL PREDICTION ON MNIST - FULL RUN ===
+
+Dimensions -> train: 4000  calib: 2000  test: 2000 
+
+Class distribution in training set:
+y_train
+  0   1   2   3   4   5   6   7   8   9 
+398 423 392 456 351 363 400 425 390 402 
+
+Class distribution in calibration set:
+y_calib
+  0   1   2   3   4   5   6   7   8   9 
+189 245 188 206 174 194 193 237 201 173 
+
+Class distribution in test set:
+y_test
+  0   1   2   3   4   5   6   7   8   9 
+191 232 189 201 201 180 199 193 208 206 
+
+Training neural network...
+Epoch 50 - loss: 2.1133 
+Epoch 100 - loss: 1.0847 
+Epoch 150 - loss: 0.6529 
+Epoch 200 - loss: 0.4964 
+Epoch 250 - loss: 0.4166 
+Epoch 300 - loss: 0.3677 
+Epoch 350 - loss: 0.3343 
+Epoch 400 - loss: 0.3096 
+
+Accuracy on training set: 91.83 %
+Accuracy on test set: 88.7 %
+
+Conformal threshold (qhat) - base method: 0.689 
+Inclusion threshold (1 - qhat) - base method: 0.311 
+Empirical coverage (base method): 91.45 % (target: 90 %)
+
+--- LAC Set Size Statistics ---
+Mean set size: 1.0695 
+Median set size: 1 
+Min set size: 0 
+Max set size: 2 
+Distribution of set sizes (LAC):
+sizes_base_test
+   0    1    2 
+  11 1839  150 
+Number of EMPTY sets (size 0): 11 out of 2000 
+Percentage of empty sets: 0.55 %
+
+Conformal threshold (qhat) - APS method: 0.996 
+Empirical coverage (APS method): 99.6 % (target: 90 %)
+
+--- APS Set Size Statistics ---
+Mean set size: 4.2415 
+Median set size: 4 
+Min set size: 1 
+Max set size: 10 
+Distribution of set sizes (APS):
+sizes_aps_test
+  1   2   3   4   5   6   7   8   9  10 
+185 308 313 314 319 251 151 106  49   4 
+
+
+--- Summary over 50 random splits ---
+Average coverage (base): 89.81 %
+Average coverage (APS):  99.57 %
+Std dev coverage (base): 0.91 %
+Std dev coverage (APS):  0.11 %
+Min coverage (base): 87.55 %
+Min coverage (APS):  99.35 %
+Max coverage (base): 92.25 %
+Max coverage (APS):  99.85 %
+Average prediction set size (base): 1.0296 
+Average prediction set size (APS):  4.2037 
+
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+--- Visual examples details ---
+Image index: 415 | True digit: 4 
+  Top-3 probabilities: 4 = 0.8398, 9 = 0.154, 8 = 0.0028 
+  LAC set: {4} size= 1 
+  APS set: {4,8,9} size= 3 
+
+Image index: 463 | True digit: 1 
+  Top-3 probabilities: 1 = 0.9431, 8 = 0.0281, 2 = 0.0267 
+  LAC set: {1} size= 1 
+  APS set: {1,2,8} size= 3 
+
+Image index: 179 | True digit: 9 
+  Top-3 probabilities: 9 = 0.8088, 4 = 0.1628, 8 = 0.0107 
+  LAC set: {9} size= 1 
+  APS set: {3,4,5,8,9} size= 5 
+
+Image index: 526 | True digit: 6 
+  Top-3 probabilities: 6 = 0.7186, 5 = 0.1722, 8 = 0.0708 
+  LAC set: {6} size= 1 
+  APS set: {0,2,3,4,5,6,8} size= 7 
+
+Image index: 195 | True digit: 0 
+  Top-3 probabilities: 0 = 0.8873, 5 = 0.0717, 2 = 0.0251 
+  LAC set: {0} size= 1 
+  APS set: {0,2,3,5,6} size= 5 
+
+Image index: 938 | True digit: 3 
+  Top-3 probabilities: 3 = 0.6257, 5 = 0.3261, 8 = 0.0293 
+  LAC set: {3,5} size= 2 
+  APS set: {0,3,5,8,9} size= 5 
+
+null device 
+          1 
+--- LAC Score Statistics (calibration) ---
+Mean: 0.1975 
+Median: 0.0728 
+Min: 0 
+Max: 1 
+Std dev: 0.2685 
+% of scores < 0.1: 56 %
+% of scores < 0.5: 85.5 %
+
+null device 
+          1 
+--- APS Score Statistics (calibration) ---
+Mean: 0.8843 
+Median: 0.9451 
+Min: 0.2667 
+Max: 1 
+Std dev: 0.1419 
+
+null device 
+          1 
+--- Reliability Diagram Data ---
+Bin centers: 0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95 
+Observed accuracy: NA, NA, 0.125, 0.4211, 0.5053, 0.6618, 0.7143, 0.8485, 0.9258, 0.991 
+Bin counts: NA, NA, 8, 57, 95, 136, 112, 198, 283, 1111 
+
+null device 
+          1 
+--- Coverage vs Alpha ---
+alpha = 0.01  target = 0.99  empirical = 0.9925 
+alpha = 0.03  target = 0.97  empirical = 0.972 
+alpha = 0.05  target = 0.95  empirical = 0.954 
+alpha = 0.07  target = 0.93  empirical = 0.9385 
+alpha = 0.09  target = 0.91  empirical = 0.9225 
+alpha = 0.11  target = 0.89  empirical = 0.899 
+alpha = 0.13  target = 0.87  empirical = 0.8675 
+alpha = 0.15  target = 0.85  empirical = 0.8395 
+alpha = 0.17  target = 0.83  empirical = 0.8125 
+alpha = 0.19  target = 0.81  empirical = 0.795 
+alpha = 0.21  target = 0.79  empirical = 0.7785 
+alpha = 0.23  target = 0.77  empirical = 0.758 
+alpha = 0.25  target = 0.75  empirical = 0.73 
+alpha = 0.27  target = 0.73  empirical = 0.711 
+alpha = 0.29  target = 0.71  empirical = 0.6885 
+alpha = 0.31  target = 0.69  empirical = 0.656 
+alpha = 0.33  target = 0.67  empirical = 0.6395 
+alpha = 0.35  target = 0.65  empirical = 0.625 
+alpha = 0.37  target = 0.63  empirical = 0.6135 
+alpha = 0.39  target = 0.61  empirical = 0.601 
+
+null device 
+          1 
+--- Set Size vs Alpha ---
+target = 0.99  avg set size = 2.9465 
+target = 0.97  avg set size = 1.7265 
+target = 0.95  avg set size = 1.3875 
+target = 0.93  avg set size = 1.19 
+target = 0.91  avg set size = 1.1045 
+target = 0.89  avg set size = 1.022 
+target = 0.87  avg set size = 0.9565 
+target = 0.85  avg set size = 0.904 
+target = 0.83  avg set size = 0.864 
+target = 0.81  avg set size = 0.8325 
+target = 0.79  avg set size = 0.8125 
+target = 0.77  avg set size = 0.786 
+target = 0.75  avg set size = 0.7515 
+target = 0.73  avg set size = 0.7285 
+target = 0.71  avg set size = 0.704 
+target = 0.69  avg set size = 0.669 
+target = 0.67  avg set size = 0.65 
+target = 0.65  avg set size = 0.635 
+target = 0.63  avg set size = 0.622 
+target = 0.61  avg set size = 0.609 
+
+null device 
+          1 
+--- Coverage by Digit (LAC) ---
+Digit 0 : coverage = 96.86 % (n = 191 images)
+Digit 1 : coverage = 97.41 % (n = 232 images)
+Digit 2 : coverage = 91.01 % (n = 189 images)
+Digit 3 : coverage = 91.04 % (n = 201 images)
+Digit 4 : coverage = 92.54 % (n = 201 images)
+Digit 5 : coverage = 81.11 % (n = 180 images)
+Digit 6 : coverage = 89.95 % (n = 199 images)
+Digit 7 : coverage = 90.67 % (n = 193 images)
+Digit 8 : coverage = 88.94 % (n = 208 images)
+Digit 9 : coverage = 93.2 % (n = 206 images)
+
+null device 
+          1 
+--- APS Set Size by Digit ---
+Digit 0 : avg set size = 3.1518  (n = 191 images)
+Digit 1 : avg set size = 4.2069  (n = 232 images)
+Digit 2 : avg set size = 3.3122  (n = 189 images)
+Digit 3 : avg set size = 3.8458  (n = 201 images)
+Digit 4 : avg set size = 4.7015  (n = 201 images)
+Digit 5 : avg set size = 5.7722  (n = 180 images)
+Digit 6 : avg set size = 3.5779  (n = 199 images)
+Digit 7 : avg set size = 3.4404  (n = 193 images)
+Digit 8 : avg set size = 5.2308  (n = 208 images)
+Digit 9 : avg set size = 5.1359  (n = 206 images)
+
+null device 
+          1 
+--- Training Loss ---
+Initial loss (epoch 1): 2.3025 
+Loss at epoch 50: 2.1133 
+Loss at epoch 100: 1.0847 
+Loss at epoch 200: 0.4964 
+Final loss (epoch 400): 0.3096 
+
+null device 
+          1 
+--- LAC vs APS Comparison ---
+Images where APS < LAC: 0 
+Images where APS = LAC: 187 
+Images where APS > LAC: 1813 
+
+null device 
+          1 
+--- Confusion Matrix ---
+         True
+Predicted   0   1   2   3   4   5   6   7   8   9
+        0 183   0   2   1   1   2   3   3   1   0
+        1   0 221   4   1   2   0   5   1   2   2
+        2   0   2 169   4   0   2   7   4   4   2
+        3   2   0   0 176   0  16   0   0  11   1
+        4   0   0   3   0 176   2   3   0   2   4
+        5   1   1   1  10   0 137   4   0   3   4
+        6   4   1   6   1   4   2 175   0   1   0
+        7   0   1   2   1   1   1   0 175   1   7
+        8   1   6   2   5   4  13   2   2 179   3
+        9   0   0   0   2  13   5   0   8   4 183
+
+--- Per-digit accuracy ---
+Digit 0 : accuracy = 95.81 % (n = 191 )
+Digit 1 : accuracy = 95.26 % (n = 232 )
+Digit 2 : accuracy = 89.42 % (n = 189 )
+Digit 3 : accuracy = 87.56 % (n = 201 )
+Digit 4 : accuracy = 87.56 % (n = 201 )
+Digit 5 : accuracy = 76.11 % (n = 180 )
+Digit 6 : accuracy = 87.94 % (n = 199 )
+Digit 7 : accuracy = 90.67 % (n = 193 )
+Digit 8 : accuracy = 86.06 % (n = 208 )
+Digit 9 : accuracy = 88.83 % (n = 206 )
+
+=== DONE ===
