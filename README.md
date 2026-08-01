@@ -316,8 +316,5 @@ Full log archived at [`images/console_output.txt`](images/console_output.txt).
 
 ## 👤 Authors
 
-* **Alessandro Iacono** — *Master's Student in Data Science & Statistical Learning, University of Pisa*
+* **Alessandro Iacono** — *Master's Student in Data Science, University of Pisa*
 * **Irene Mungo** — *Co-author & Contributor*
-
----
-*Built with rigor, statistical precision, and clean pipeline practices.*
