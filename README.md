@@ -1,6 +1,26 @@
 # 🎯 Distribution-Free Uncertainty Quantification: Conformal Prediction on MNIST
 
-A full-cycle R statistical learning project implementing **Conformal Prediction** for distribution-free uncertainty quantification on the MNIST dataset using a custom Neural Network built entirely from scratch in base R.
+> **A full-cycle statistical learning project** built entirely on base R: a neural
+> network trained from scratch, wrapped in a rigorous conformal prediction layer that
+> turns raw softmax scores into prediction sets with a provable, distribution-free
+> coverage guarantee.
+
+---
+
+## 🤔 Why Conformal Prediction?
+
+A softmax output like "87% confidence" is not a guarantee — it's just a number the
+network produces, and it can be badly miscalibrated. **Conformal Prediction** flips
+the question: instead of asking a model to *report* its confidence, it asks the data
+to *prove* a coverage guarantee, distribution-free, with no assumptions about the
+underlying model. Given any classifier — even a black box — and a calibration set,
+conformal methods construct prediction sets that provably contain the true label at
+least $1-\alpha$ of the time, a property verified empirically here across 50
+independent calibration/test splits.
+
+This matters most exactly where point predictions are risky to trust blindly: medical
+imaging, autonomous driving, or any pipeline where "I don't know" is a more useful
+answer than a confident wrong guess.
 
 ---
 
@@ -18,15 +38,12 @@ A full-cycle R statistical learning project implementing **Conformal Prediction*
 ```text
 conformal-prediction-mnist/
 ├── code/
-│   └── 01_Conformal_Prediction_MNIST.R    # Master script (NN training, Conformal algorithms, evaluation)
+│   ├── 01_Conformal_Prediction_MNIST.R    # Master script (NN training, Conformal algorithms, evaluation)
+│   └── requirements.R                     # One-click dependency installation script
 ├── docs/
-│   ├── Paper_to_replicate.pdf             # Reference paper (Angelopoulos & Bates)
+│   ├── Paper_to_replicate.pdf             # Reference paper (Angelopoulos & Bates, 2021)
 │   ├── Presentation.pptx                  # Project presentation deck
-│   ├── Project_Guidelines.pdf             # Course project instructions & guidelines
-│   └── Latex/
-│       ├── main.tex                       # LaTeX Beamer source code
-│       ├── beamer.sty                     # Beamer styling parameters
-│       └── unipi.eps                      # University of Pisa logo
+│   └── Project_Guidelines.pdf             # Course project instructions & guidelines
 ├── images/
 │   ├── 01_coverage_histogram.png          # Empirical coverage distribution over 50 splits
 │   ├── 02_set_size_histogram.png          # Prediction set size distribution
@@ -43,6 +60,7 @@ conformal-prediction-mnist/
 │   ├── 13_confusion_matrix.png            # Neural network confusion matrix on test set
 │   └── console_output.txt                 # Full console log output from execution
 ├── .gitignore                             # Git ignore configuration
+├── LICENSE                                # MIT License
 └── README.md                              # Project documentation
 ```
 
@@ -56,7 +74,28 @@ conformal-prediction-mnist/
 | **Machine Learning** | 2-Layer Neural Network (SGD, Cross-Entropy), Base Conformal (LAC), Adaptive Prediction Sets (APS) |
 | **Dataset** | MNIST Digit Recognition (`dslabs` package) |
 | **Evaluation** | 50 Monte Carlo Random Splits, Conformal Quantiles, Coverage & Efficiency Trade-offs |
-| **Documentation & Slides** | LaTeX (Beamer), PowerPoint, Markdown |
+
+---
+
+## ⚙️ Requirements & Environment
+
+This project intentionally avoids ML frameworks — the neural network and both
+conformal procedures (LAC, APS) are implemented in **base R**. The only external
+dependency is the dataset loader.
+
+| Requirement | Notes |
+| --- | --- |
+| R | `R >= 4.0.0` (Tested on R 4.6) |
+| [`dslabs`](https://CRAN.R-project.org/package=dslabs) | Provides the MNIST dataset |
+
+Install the dependency using the provided helper script:
+
+```r
+Rscript code/requirements.R
+```
+
+No `renv`/`packrat` lockfile is used on purpose — the project stays dependency-light
+so the conformal prediction logic remains auditable line by line.
 
 ---
 
@@ -68,10 +107,6 @@ The neural network was trained on 4,000 images over 400 epochs with a learning r
 * **Final Loss (Epoch 400)**: `0.3096`
 * **Training Accuracy**: `91.83%`
 * **Test Accuracy**: `88.70%`
-
-Per-digit baseline test accuracy:
-* Highest accuracy: **Digit 0 (95.81%)**, **Digit 1 (95.26%)**
-* Lowest accuracy: **Digit 5 (76.11%)**, **Digit 8 (86.06%)**
 
 ![Training Loss](images/11_training_loss.png)
 
@@ -88,7 +123,7 @@ Using a target coverage of $90\%$ ($\alpha = 0.10$):
 | **50-Split Mean Coverage** | **`89.81% ± 0.91%`** | **`99.57% ± 0.11%`** |
 | **50-Split Min / Max Coverage** | `87.55%` / `92.25%` | `99.35%` / `99.85%` |
 | **Average Prediction Set Size** | **`1.03 classes`** | **`4.20 classes`** |
-| **Empty Sets ($|\hat{C}| = 0$)** | `0.55%` (11 / 2000 images) | `0.00%` |
+| **Empty Sets ($\lvert \hat{C} \rvert = 0$)** | `0.55%` (11 / 2000 images) | `0.00%` |
 
 ![Coverage Histogram](images/01_coverage_histogram.png)
 
@@ -120,6 +155,15 @@ As the target error rate $\alpha$ varies, the empirical coverage closely tracks 
 
 ---
 
+## 🔭 Limitations & Future Work
+
+- **Backbone capacity**: the from-scratch network is a compact 2-layer MLP trained on a 4,000-image subset — a deeper network or the full 60k-image training set would likely raise baseline accuracy and could shrink APS set sizes further.
+- **Exchangeability assumption**: both LAC and APS rely on the calibration and test sets being exchangeable; this holds for the i.i.d. splits used here but would need revisiting under distribution shift.
+- **Single dataset**: results are MNIST-specific — validating LAC/APS on a harder benchmark (e.g. Fashion-MNIST, CIFAR-10) would test how set sizes scale with genuine class ambiguity.
+- **Group-conditional coverage**: per-digit coverage already varies in the results above — a natural next step is class-conditional (Mondrian) conformal prediction to tighten worst-class guarantees rather than only the marginal one.
+
+---
+
 ## 📈 Results & Business Impact
 
 | Dimension | Metric | Impact |
@@ -138,10 +182,29 @@ As the target error rate $\alpha$ varies, the empirical coverage closely tracks 
    cd conformal-prediction-mnist
    ```
 
-2. **Execute R Pipeline**:
+2. **Install Dependencies** (one-time):
+   ```bash
+   Rscript code/requirements.R
+   ```
+
+3. **Execute R Pipeline**:
    ```bash
    Rscript code/01_Conformal_Prediction_MNIST.R
    ```
+
+---
+
+## 📚 References
+
+- Angelopoulos, A. N., & Bates, S. (2021). *A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification.* Reference paper replicated in [`docs/Paper_to_replicate.pdf`](docs/Paper_to_replicate.pdf).
+- MNIST database of handwritten digits, accessed via the [`dslabs`](https://CRAN.R-project.org/package=dslabs) R package.
+
+---
+
+## 👤 Authors
+
+* **Alessandro Iacono** — *Master's Student in Data Science & Statistical Learning, University of Pisa*
+* **Irene Mungo** — *Co-author & Contributor*
 
 ---
 *Built with rigor, statistical precision, and clean pipeline practices.*
