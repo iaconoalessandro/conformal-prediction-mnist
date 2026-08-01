@@ -20,9 +20,9 @@ conformal-prediction-mnist/
 ├── code/
 │   └── 01_Conformal_Prediction_MNIST.R    # Master script (NN training, Conformal algorithms, evaluation)
 ├── docs/
-│   ├── 08.ConformalPrediction.pdf          # Reference paper / lecture slides
-│   ├── Conformal_Prediction_on_MNIST.pptx  # Project presentation deck
-│   ├── sds.project.2026.pdf               # Project report
+│   ├── Paper_to_replicate.pdf             # Reference paper (Angelopoulos & Bates)
+│   ├── Presentation.pptx                  # Project presentation deck
+│   ├── Project_Guidelines.pdf             # Course project instructions & guidelines
 │   └── Latex/
 │       ├── main.tex                       # LaTeX Beamer source code
 │       ├── beamer.sty                     # Beamer styling parameters
